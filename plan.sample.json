@@ -5,7 +5,7 @@
       , "output": "payment.log"
       , "format": "json"
       }
-    , "nogaila": {
+    , "request": {
       "file": "./sample.json"
       , "num": 10
       , "output": "stdout"

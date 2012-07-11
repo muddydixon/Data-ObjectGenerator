@@ -23,8 +23,8 @@ To install this module, run the following commands:
 
 Then try below command
 
-  $ perl ./bin/datagen.pl -t sample.json -n 3 -f fluentd
-  $ perl ./bin/datagen.pl -p plan.sample.json 
+	$ perl ./bin/datagen.pl -t sample.json -n 3 -f fluentd
+	$ perl ./bin/datagen.pl -p plan.sample.json 
 
 SUPPORT AND DOCUMENTATION
 
