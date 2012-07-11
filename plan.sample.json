@@ -1,0 +1,14 @@
+{
+    "payment": {
+      "file": "./sample.json"
+      , "num": 1000
+      , "output": "payment.log"
+      , "format": "json"
+      }
+    , "nogaila": {
+      "file": "./sample.json"
+      , "num": 10
+      , "output": "stdout"
+      , "format": "json"
+      }
+}

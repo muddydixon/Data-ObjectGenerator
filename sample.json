@@ -1,0 +1,33 @@
+{
+    "user_id" : {
+        "type": "Number"
+      , "min": 50
+      , "max": 100
+    }
+    , "user_name": {
+        "type": "String"
+      , "pat": "Cccnnnnn"
+    }
+    , "time": {
+        "type": "Number"
+      , "min": 1341367130
+      , "max": 1341971912
+    }
+    , "tag": "sample"
+    , "type": {
+        "type": "Enum"
+      , "items": ["hoge", "fuga", "piyo"]
+    }
+    , "register_hour": {
+        "type": "Number"
+      , "min": 1341367130
+      , "max": 1341971912
+      , "round": 3600
+    }
+    , "average": {
+        "type": "Number"
+      , "min": 100
+      , "max": 500
+      , "isDouble": 1
+    }
+}
