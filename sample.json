@@ -1,5 +1,6 @@
 {
-    "user_id" : {
+    "tag": "test.sample"
+    , "user_id" : {
         "type": "Number"
       , "min": 50
       , "max": 100
@@ -10,13 +11,16 @@
     }
     , "time": {
         "type": "Number"
-      , "min": 1341367130
-      , "max": 1341971912
+      , "min": "% time - 3600 * 24 * 7 %"
+      , "max": "% time %"
     }
-    , "tag": "sample"
     , "type": {
         "type": "Enum"
       , "items": ["hoge", "fuga", "piyo"]
+    }
+    , "gender": {
+        "type": "Enum"
+      , "items": ["% ['male', 'female', 'unknown'] %"]
     }
     , "register_hour": {
         "type": "Number"
