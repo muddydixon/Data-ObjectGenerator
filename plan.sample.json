@@ -1,14 +1,54 @@
 {
-    "payment": {
-      "file": "./sample.json"
+    "file": {
+        "file": "./sample.json"
       , "num": 1000
       , "output": "payment.log"
       , "format": "json"
       }
-    , "request": {
-      "file": "./sample.json"
+    , "stdout": {
+        "file": "./sample.json"
       , "num": 10
       , "output": "stdout"
-      , "format": "json"
+      , "format": "csv"
+      }
+    , "fluentd.log": {
+        "file": "./sample.json"
+      , "num": 10
+      , "output": "stdout"
+      , "format": "fluentd"
+      }
+    , "fluentd.forward": {
+        "file": "./sample.json"
+      , "num": 10
+      , "output": {
+          "type": "fluentd"
+        , "tag": "test.mogumogu"
+        , "host": "localhost"
+        , "port": 24224
+        }
+      }
+    , "mongo": {
+        "file": "./sample.json"
+      , "num": 10
+      , "output": {
+          "type": "mongo"
+        , "host": "localhost"
+        , "port": "27017"
+        , "db": "test"
+        , "collection": "mogumogu"
+        }
+      }
+    , "mysql": {
+        "file": "./sample.json"
+      , "num": 10
+      , "output": {
+          "type": "mysql"
+        , "host": "localhost"
+        , "port": "3306"
+        , "db": "test"
+        , "table": "mogumogu"
+        , "user": "root"
+        , "pass": ""
+        }
       }
 }
