@@ -14,14 +14,14 @@ my $now = time;
 my $Tmp = Data::ObjectGenerator::Template;
 
 my $template = {
-    "user_id" => $Tmp->Number(50, 100),
-    "user_name" => $Tmp->String('Cccnnnnn'),
-    "time" => $Tmp->Number($now - 3600 * 24 * 7, $now),
-    "type" => $Tmp->Enum('hoge', 'fuga', 'piyo'),
+    "user_id" => $Tmp->Number(min => 50, max => 100),
+    "user_name" => $Tmp->String(pat => 'Cccnnnnn'),
+    "time" => $Tmp->Number(min => $now - 3600 * 24 * 7, max => $now),
+    "type" => $Tmp->Enum(items => ['hoge', 'fuga', 'piyo']),
     "tag" => "test.sample",
-    "register_hour" => $Tmp->Number(1341367130, 1341971912, 3600),
-    "gender" => $Tmp->Enum('man', 'woman'),
-    "average" => $Tmp->Number(100, 500, undef, 1),
+    "register_hour" => $Tmp->Number(min => 1341367130, max => 1341971912, round => 3600),
+    "gender" => $Tmp->Enum(items => ['man', 'woman']),
+    "average" => $Tmp->Number(min => 100, max => 500, isDouble => 1),
 };
 
 sub one_test {
@@ -37,7 +37,7 @@ sub one_test {
 
     # String check
     like($o->{user_name}, qr/^[A-Z][a-z]{2}\d{5}$/, 'check string');
-
+    
     # Enum check
     ok($o->{type} eq 'hoge' or $o->{type} eq 'fuga' or $o->{type} eq 'piyo');
 
@@ -91,9 +91,9 @@ foreach my $d (@$data){
 # check pat method
 #
 $template = {
-    "area_id" => $Tmp->Number(1, 20),
-    "mission_id" => $Tmp->Number(1, 30),
-    "count" => $Tmp->Number(300, 1000),
+    "area_id" => $Tmp->Number(min => 1, max => 20),
+    "mission_id" => $Tmp->Number(min => 1, max => 30),
+    "count" => $Tmp->Number(min => 300, max => 1000),
 };
 
 $sample = Data::ObjectGenerator->new(template => $template);
@@ -120,6 +120,5 @@ foreach my $d (@$data){
 #
 $sample = Data::ObjectGenerator->new(file => "./sample.json");
 $data = $sample->one();
-one_test($data);
 
 1;

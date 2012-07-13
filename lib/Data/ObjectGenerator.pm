@@ -8,6 +8,7 @@ use Carp;
 use Config::JSON;
 
 use Data::ObjectGenerator::Template;
+use Data::Dumper;
 
 =head1 NAME
 
@@ -70,40 +71,74 @@ Perhaps a little code snippet.
 
 sub new {
     my ($this, %opts) = @_;
+    
     croak "template or file is required" unless $opts{template} or $opts{file};
     my $template = $opts{template} || {};
+
+    my $variables = {};
 
     if(defined $opts{file}){
         my $config = Config::JSON->new($opts{file});
         $config = $config->{config};
-        foreach my $key (keys %$config){
-            if(ref($config->{$key}) ne 'HASH'){
-                $template->{$key} = $config->{$key};
+        
+        foreach my $key (sort keys %$config){
+            if($key =~ /^\$/){
+                $variables->{$key} = $config->{$key};
                 next;
-            }else{
-                my $type = $config->{$key}{type};
-                my $def = "";
-                if($type eq 'Number'){
-                    my ($min, $max, $round, $isDouble) = ($config->{$key}{min} || 0, $config->{$key}{max} || 10000, $config->{$key}{round}, $config->{$key}{isDouble} || 0);
-                    $template->{$key} = Data::ObjectGenerator::Template->Number($min, $max, $round, $isDouble);
-                }elsif($type eq 'String'){
-                    my $pat = $config->{$key}{pat};
-                    $template->{$key} = Data::ObjectGenerator::Template->String($pat);
-                }elsif($type eq 'Enum'){
-                    my $items = $config->{$key}{items};
-                    $template->{$key} = Data::ObjectGenerator::Template->Enum(@$items);
+            }
+            
+            my $val = $config->{$key};
+            if(ref($config->{$key}) ne 'HASH'){
+                if($val !~ /^\$/){
+                    $template->{$key} = $val;
+                    next;
+                }else{
+                    $val = $variables->{$val};
                 }
             }
+
+            # set type to key
+            my $var = undef;
+            my $type = $val->{type};
+            my $extend = $val->{extend};
+            
+            my %_opts = ();
+            if(defined $extend){
+                $extend = $variables->{$extend};
+                $type = $extend->{type};
+                
+                map{$_opts{$_} = $extend->{$_}} grep{$_ ne 'type'} keys %$extend;
+                map{$_opts{$_} = $val->{$_}} grep{$_ ne 'extend'} keys %$val;
+            }else{
+                map{$_opts{$_} = $val->{$_}} grep{$_ ne 'type'} keys %$val;
+            }
+            
+            if($type eq 'Number'){
+                $var = Data::ObjectGenerator::Template->Number(%_opts);
+            }elsif($type eq 'String'){
+                $var = Data::ObjectGenerator::Template->String(%_opts);
+            }elsif($type eq 'Enum'){
+                $var = Data::ObjectGenerator::Template->Enum(%_opts);
+            }
+            
+            $template->{$key} = $var;
         }
     }
 
     my $self = +{
         template => $template,
+        variables => $variables,
         file => $opts{file},
         num => 10,
     };
 
     return bless $self, $this;
+}
+
+sub _createType {
+    my $type = shift;
+    my %opts = @_;
+    
 }
 
 =head2 INSTANCE METHODS

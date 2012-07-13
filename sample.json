@@ -1,5 +1,10 @@
 {
-    "tag": "test.sample"
+    "$thisweek": {
+        "type": "Number"
+      , "min": "% time - 3600 * 24 * 7 %"
+      , "max": "% time %"
+    }
+    , "tag": "test.sample"
     , "user_id" : {
         "type": "Number"
       , "min": 50
@@ -8,6 +13,11 @@
     , "user_name": {
         "type": "String"
       , "pat": "Cccnnnnn"
+    }
+    , "checkin": "$thisweek"
+    , "checkout": {
+        "extend": "$thisweek"
+      , "round": 3600
     }
     , "time": {
         "type": "Number"
