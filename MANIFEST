@@ -1,0 +1,15 @@
+bin/datagen.pl
+example/fluentd.conf
+example/mongod.conf
+example/mysql.sql
+lib/Data/ObjectGenerator.pm
+lib/Data/ObjectGenerator/Template.pm
+Makefile.PL
+MANIFEST			This list of files
+plan.sample.json
+README.md
+sample.json
+t/00-load.t
+t/main.t
+t/pod-coverage.t
+t/pod.t

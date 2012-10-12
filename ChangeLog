@@ -1,0 +1,7 @@
+0.0.2 (2012-10-12)
+  Fix time min / max of t/main.t (muddydixon)
+
+0.0.1 (2012-07-12)
+  add feature: write to mysql, mongod, fluentd (muddydixon)
+  fix a little (muddydixon)
+  first commit (muddydixon)
