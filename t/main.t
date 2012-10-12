@@ -11,14 +11,14 @@ use Data::ObjectGenerator::Template;
 # create Template
 #
 my $Tmp = Data::ObjectGenerator::Template;
-
+my ($minTime, $maxTime) = (1341367130, 1341971912);
 my $template = {
     "user_id" => $Tmp->Number(50, 100),
     "user_name" => $Tmp->String('Cccnnnnn'),
-    "time" => $Tmp->Number(time - 3600 * 24 * 7, time),
+    "time" => $Tmp->Number($minTime, $maxTime),
     "type" => $Tmp->Enum('hoge', 'fuga', 'piyo'),
     "tag" => "sample",
-    "register_hour" => $Tmp->Number(time - 3600 * 24 * 7, time, 3600),
+    "register_hour" => $Tmp->Number($minTime, $maxTime, 3600),
     "average" => $Tmp->Number(100, 500, undef, 1),
 };
 
@@ -41,8 +41,8 @@ sub one_test {
     cmp_ok($o->{user_id}, '<=', 100, 'check max');
     like($o->{user_name}, qr/^[A-Z][a-z]{2}\d{5}$/, 'check string');
     ok($o->{type} eq 'hoge' or $o->{type} eq 'fuga' or $o->{type} eq 'piyo');
-    cmp_ok($o->{register_hour}, '>=', time - 3600 * 24 * 7, 'check time min');
-    cmp_ok($o->{register_hour}, '<=', time, 'check time max');
+    cmp_ok($o->{register_hour}, '>=', $minTime, 'check time min');
+    cmp_ok($o->{register_hour}, '<=', $maxTime, 'check time max');
     ok(($o->{register_hour} % 3600) == 0, 'check time round');
     ok(($o->{register_hour} % 3600) == 0, 'check time round');
 }
